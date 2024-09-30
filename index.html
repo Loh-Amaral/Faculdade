@@ -15,29 +15,6 @@
 
     <div class="resultado" id="resultado"></div>
 
-    <h2>Adicionar Figurinha</h2>
-    <label for="numeroAdicionar">Número da figurinha:</label>
-    <input type="number" id="numeroAdicionar" required>
-    <label for="quantidadeAdicionar">Quantidade:</label>
-    <input type="number" id="quantidadeAdicionar" required>
-    <label for="localAdicionar">Com quem está:</label>
-    <input type="text" id="localAdicionar" required>
-    <button onclick="adicionar()">Adicionar Figurinha</button>
-
-    <h2>Baixar Figurinha</h2>
-    <label for="numeroBaixar">Número da figurinha:</label>
-    <input type="number" id="numeroBaixar" required>
-    <label for="quantidadeBaixar">Quantidade a baixar:</label>
-    <input type="number" id="quantidadeBaixar" required>
-    <label for="unidadeBaixar">Unidade (CS, GS, NS, NK, NR, BS, Sede):</label>
-    <input type="text" id="unidadeBaixar" required>
-    <label for="nomeBaixar">Nome:</label>
-    <input type="text" id="nomeBaixar" required>
-    <button onclick="baixar()">Baixar Figurinha</button>
-
-    <h2>Visualizar Retiradas</h2>
-    <div id="historicoRetiradas" class="resultado"></div>
-
     <script>
         let bancoDados = JSON.parse(localStorage.getItem('bancoDados')) || [
             { numero: 88, quantidade: 1, comQuem: "MKT CS" },
@@ -79,43 +56,7 @@
 
         const historicoRetiradas = [];
 
-        function adicionar() {
-            const numero = parseInt(document.getElementById('numeroAdicionar').value);
-            const quantidade = parseInt(document.getElementById('quantidadeAdicionar').value);
-            const comQuem = document.getElementById('localAdicionar').value;
-
-            bancoDados.push({ numero, quantidade, comQuem });
-            localStorage.setItem('bancoDados', JSON.stringify(bancoDados));
-            alert('Figurinha adicionada com sucesso!');
-        }
-
-        function baixar() {
-            const numero = parseInt(document.getElementById('numeroBaixar').value);
-            const quantidade = parseInt(document.getElementById('quantidadeBaixar').value);
-            const unidade = document.getElementById('unidadeBaixar').value;
-            const nome = document.getElementById('nomeBaixar').value;
-
-            const figurinha = bancoDados.find(f => f.numero === numero);
-            if (figurinha && figurinha.quantidade >= quantidade) {
-                figurinha.quantidade -= quantidade;
-                if (figurinha.quantidade === 0) {
-                    alert('A figurinha ' + numero + ' não está mais disponível.');
-                }
-                historicoRetiradas.push({ numero, quantidade, unidade, nome, data: new Date().toLocaleString() });
-                localStorage.setItem('bancoDados', JSON.stringify(bancoDados));
-                alert('Figurinha baixada com sucesso!');
-                visualizarRetiradas();
-            } else {
-                alert('Quantidade indisponível!');
-            }
-        }
-
-        function visualizarRetiradas() {
-            const historicoDiv = document.getElementById('historicoRetiradas');
-            historicoDiv.innerHTML = '<h3>Histórico de Retiradas:</h3>';
-            historicoRetiradas.forEach(retirada => {
-                historicoDiv.innerHTML += `<p>Figurinha ${retirada.numero} - Quantidade: ${retirada.quantidade} - Unidade: ${retirada.unidade} - Nome: ${retirada.nome} - Data: ${retirada.data}</p>`;
-            });
+        
         }
 
         function consultarSequencia() {
